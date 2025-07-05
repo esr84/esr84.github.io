@@ -3,6 +3,7 @@
     "short_name": "BingoTusos",
     "start_url": "index.html",
     "display": "fullscreen",
+	"orientation": "portrait",
     "background_color": "#231F20",
     "theme_color": "#000",
     "description": "BingoTusos",
