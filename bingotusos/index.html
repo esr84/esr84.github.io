@@ -7,6 +7,44 @@
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     <link rel="manifest" href="manifest.webmanifest">
+	
+    <!-- Estilos para pantalla completa y orientación -->
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: #000;
+        overflow: hidden;
+      }
+
+      #unity-container {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #rotate-warning {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: black;
+        color: white;
+        font-size: 2em;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
   </head>
   <body>
     <div id="unity-container">
@@ -19,11 +57,29 @@
       </div>
       <div id="unity-warning"> </div>
     </div>
-	    <div id="rotate-warning">
+	<div id="rotate-warning">
       🚫 Por favor gira tu dispositivo al modo vertical 📱
     </div>
 	
     <script>
+	
+	function checkOrientation() {
+  const warning = document.getElementById('rotate-warning');
+  if (window.innerWidth > window.innerHeight) {
+    // Landscape
+    warning.style.display = 'flex';
+  } else {
+    // Portrait
+    warning.style.display = 'none';
+  }
+}
+
+window.addEventListener("resize", checkOrientation);
+window.addEventListener("orientationchange", checkOrientation);
+
+// Llamar al cargar la página
+checkOrientation();
+	
       window.addEventListener("load", function () {
         if ("serviceWorker" in navigator) {
           navigator.serviceWorker.register("ServiceWorker.js");
