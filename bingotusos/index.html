@@ -58,7 +58,7 @@
       <div id="unity-warning"> </div>
     </div>
 	<div id="rotate-warning">
-      🚫 Por favor gira tu dispositivo al modo vertical 📱
+       🔄 Por favor gira tu dispositivo al modo horizontal 🖥️
     </div>
 	
     <script>
@@ -67,10 +67,10 @@
   const warning = document.getElementById('rotate-warning');
   if (window.innerWidth > window.innerHeight) {
     // Landscape
-    warning.style.display = 'flex';
+    warning.style.display = 'none';
   } else {
     // Portrait
-    warning.style.display = 'none';
+    warning.style.display = 'flex';
   }
 }
 
