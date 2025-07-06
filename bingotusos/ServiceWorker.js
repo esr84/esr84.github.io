@@ -1,4 +1,4 @@
-const cacheName = "DefaultCompany-BingoTusos-1.0";
+const cacheName = "Los Tusos-BingoTusos-1.0";
 const contentToCache = [
     "Build/html.loader.js",
     "Build/html.framework.js",
