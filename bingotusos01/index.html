@@ -3,10 +3,48 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | BingoTusos</title>
+    <title>El Bingo de los Tuuusos</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     <link rel="manifest" href="manifest.webmanifest">
+	
+    <!-- Estilos para pantalla completa y orientación -->
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: #000;
+        overflow: hidden;
+      }
+
+      #unity-container {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #rotate-warning {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: black;
+        color: white;
+        font-size: 2em;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
   </head>
   <body>
     <div id="unity-container">
@@ -19,7 +57,29 @@
       </div>
       <div id="unity-warning"> </div>
     </div>
+	<div id="rotate-warning">
+       🔄 Por favor gira tu dispositivo al modo horizontal 🖥️
+    </div>
+	
     <script>
+	
+	function checkOrientation() {
+  const warning = document.getElementById('rotate-warning');
+  if (window.innerWidth > window.innerHeight) {
+    // Landscape
+    warning.style.display = 'none';
+  } else {
+    // Portrait
+    warning.style.display = 'flex';
+  }
+}
+
+window.addEventListener("resize", checkOrientation);
+window.addEventListener("orientationchange", checkOrientation);
+
+// Llamar al cargar la página
+checkOrientation();
+	
       window.addEventListener("load", function () {
         if ("serviceWorker" in navigator) {
           navigator.serviceWorker.register("ServiceWorker.js");
@@ -57,23 +117,16 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/http26.loader.js";
+      var loaderUrl = buildUrl + "/html.loader.js";
       var config = {
-        arguments: [],
-        dataUrl: buildUrl + "/http26.data",
-        frameworkUrl: buildUrl + "/http26.framework.js",
-        codeUrl: buildUrl + "/http26.wasm",
+        dataUrl: buildUrl + "/html.data",
+        frameworkUrl: buildUrl + "/html.framework.js",
+        codeUrl: buildUrl + "/html.wasm",
         streamingAssetsUrl: "StreamingAssets",
-        companyName: "Los Tusos",
+        companyName: "DefaultCompany",
         productName: "BingoTusos",
         productVersion: "1.0",
         showBanner: unityShowBanner,
-        // errorHandler: function(err, url, line) {
-        //    alert("error " + err + " occurred at line " + line);
-        //    // Return 'true' if you handled this error and don't want Unity
-        //    // to process it further, 'false' otherwise.
-        //    return true;
-        // },
       };
 
       // By default Unity keeps WebGL canvas render target size matched with
@@ -90,7 +143,6 @@
         meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
         document.getElementsByTagName('head')[0].appendChild(meta);
       }
-
 
       loadingBar.style.display = "block";
 
