@@ -1,0 +1,147 @@
+html, body {
+  margin: 0;
+  height: 100%;
+  background: #0b0612;
+  overflow: hidden;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  font-family: 'Lilita One', 'Trebuchet MS', sans-serif;
+}
+
+#wrap {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at center, #241433 0%, #0b0612 70%);
+}
+
+canvas {
+  display: block;
+  background: #000;
+  box-shadow: 0 0 40px rgba(0, 0, 0, .7);
+  touch-action: none;
+}
+
+/* ---------- Controles táctiles ---------- */
+#touch {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+#touch.hidden { display: none; }
+
+.dpad {
+  position: absolute;
+  left: calc(env(safe-area-inset-left, 0px) + 22px);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 22px);
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  border: 2px solid rgba(255, 255, 255, .28);
+  pointer-events: auto;
+  touch-action: none;
+}
+.dpad .arrow {
+  position: absolute;
+  width: 0; height: 0;
+  border: 12px solid transparent;
+  opacity: .55;
+}
+.dpad .up    { left: 50%; top: 8px;    transform: translateX(-50%); border-bottom-color: #fff; border-top-width: 0; }
+.dpad .down  { left: 50%; bottom: 8px; transform: translateX(-50%); border-top-color: #fff;    border-bottom-width: 0; }
+.dpad .left  { top: 50%;  left: 8px;   transform: translateY(-50%); border-right-color: #fff;  border-left-width: 0; }
+.dpad .right { top: 50%;  right: 8px;  transform: translateY(-50%); border-left-color: #fff;   border-right-width: 0; }
+#knob {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 56px; height: 56px;
+  margin: -28px 0 0 -28px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff8, #fff2);
+  border: 2px solid rgba(255,255,255,.5);
+  pointer-events: none;
+}
+
+.btns {
+  position: absolute;
+  right: calc(env(safe-area-inset-right, 0px) + 18px);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
+  width: 210px;
+  height: 170px;
+  pointer-events: none;
+}
+.tbtn {
+  position: absolute;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,.55);
+  color: #fff;
+  font-family: 'Bangers', 'Impact', sans-serif;
+  font-size: 18px;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 0 #0008;
+  pointer-events: auto;
+  touch-action: none;
+  outline: none;
+  padding: 0;
+}
+.tbtn.jump    { right: 0;    bottom: 0;    background: radial-gradient(circle at 35% 30%, #5fb8ffcc, #1d5fa8aa); }
+.tbtn.attack  { right: 88px; bottom: 26px; background: radial-gradient(circle at 35% 30%, #ff7a6ccc, #a8241daa); }
+.tbtn.special { right: 40px; bottom: 92px; background: radial-gradient(circle at 35% 30%, #ffe27acc, #b8801daa); width: 64px; height: 64px; font-size: 16px; }
+.tbtn.on { filter: brightness(1.5); transform: scale(.93); }
+
+#topbtns {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + 8px);
+  right: calc(env(safe-area-inset-right, 0px) + 8px);
+  display: flex;
+  gap: 8px;
+  z-index: 6;
+}
+#topbtns button {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 2px solid rgba(255,255,255,.35);
+  background: rgba(20, 10, 30, .55);
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+}
+#topbtns button.off { opacity: .45; text-decoration: line-through; }
+
+#rotate {
+  display: none;
+  position: fixed;
+  left: 0; right: 0;
+  top: 46%;
+  text-align: center;
+  color: #ffe2a0;
+  font-size: 15px;
+  opacity: .75;
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* Vertical (móvil): juego arriba, controles debajo */
+@media (orientation: portrait) {
+  body.touch #rotate { display: block; }
+  #wrap { align-items: flex-start; padding-top: calc(env(safe-area-inset-top, 0px) + 56px); }
+  .dpad { width: 170px; height: 170px; bottom: calc(env(safe-area-inset-bottom, 0px) + 40px); }
+  .btns { bottom: calc(env(safe-area-inset-bottom, 0px) + 40px); transform: scale(1.1); transform-origin: right bottom; }
+}
+
+/* Pantallas pequeñas en horizontal: controles algo más pequeños y translúcidos */
+@media (orientation: landscape) and (max-height: 500px) {
+  .dpad { width: 130px; height: 130px; left: calc(env(safe-area-inset-left, 0px) + 14px); bottom: 14px; opacity: .8; }
+  .btns { transform: scale(.85); transform-origin: right bottom; opacity: .85; right: calc(env(safe-area-inset-right, 0px) + 10px); bottom: 10px; }
+}

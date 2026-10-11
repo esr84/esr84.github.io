@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><title>Banco de efectos</title>
+<style>body{margin:0;background:#333;} canvas{display:block}</style></head>
+<body><canvas id="game"></canvas>
+<script src="../js/core.js"></script>
+<script src="../js/art.js"></script>
+<script src="../js/art_enemies.js"></script>
+<script src="../js/fx.js"></script>
+<script>
+// Cada columna es un efecto; cada fila, un instante de su vida (25 %, 50 %, 75 %). Escala ×3.
+const ctx = G.ctx, cv = G.canvas, FX = G.fx;
+const kinds = (G.params.get('k') || 'dust,explosion,hit,splash').split(',');
+const times = [0.08, 0.22, 0.4];
+Math.random = (() => { let s = 7; return () => (s = (s * 16807) % 2147483647) / 2147483647; })();
+function make(kind) {
+  FX.reset();
+  if (kind === 'dust') FX.dust(0, 0, 6);
+  if (kind === 'explosion') FX.explosion(0, 0, 0.8);
+  if (kind === 'hit') FX.hit(0, 0, true, 1);
+  if (kind === 'splash') FX.splash(0, 0, true);
+  return FX.list.slice();
+}
+const S = G.renderScale;
+ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.fillStyle = '#7a8ca8'; ctx.fillRect(0, 0, cv.width, cv.height);
+ctx.setTransform(S, 0, 0, S, 0, 0);
+if (G.params.get('items')) {
+  ['meat', 'mikan', 'energy', 'hat', 'coin'].forEach((k, i) => {
+    ctx.save(); ctx.translate(100 + i * 180, 300); ctx.scale(3.5, 3.5); G.art.drawItem(ctx, k, 1.3); ctx.restore();
+  });
+} else kinds.forEach((k, col) => {
+  times.forEach((tm, row) => {
+    make(k);
+    for (let t = 0; t < tm; t += 1 / 60) FX.update(1 / 60);
+    ctx.save();
+    ctx.translate(120 + col * 240, 100 + row * 170);
+    ctx.scale(3, 3);
+    for (const layer of [0, 1, 2]) FX.draw(ctx, 0, 0, layer);
+    ctx.restore();
+    ctx.fillStyle = '#000'; ctx.font = '13px sans-serif'; ctx.fillText(k + ' t=' + tm, 40 + col * 240, 170 + row * 170);
+  });
+});
+</script></body></html>

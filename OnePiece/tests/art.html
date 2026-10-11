@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><title>Prueba de arte</title>
+<style>body{margin:0;background:#333;} canvas{display:block}</style></head>
+<body><canvas id="game"></canvas>
+<script src="../js/core.js"></script>
+<script src="../js/art.js"></script>
+<script src="../js/art_enemies.js"></script>
+<script>
+// Banco de pruebas visual: dibuja personajes en distintas poses a escala 2x.
+const ctx = G.ctx, cv = G.canvas;
+const which = G.params.get('w') || 'players';
+function frame(t) {
+  const S = G.renderScale;
+  ctx.setTransform(1,0,0,1,0,0);
+  ctx.fillStyle = '#8fb0c8'; ctx.fillRect(0,0,cv.width,cv.height);
+  ctx.setTransform(S,0,0,S,0,0);
+  ctx.fillStyle = '#6a5a4a'; ctx.fillRect(0, 470, 960, 70);
+  const P = G.art.pose;
+  const items = which === 'players' ? [
+    ['L idle', 'drawLuffy', P.idle(t)], ['L run', 'drawLuffy', P.run(t)], ['L jump', 'drawLuffy', P.jump(-1)],
+    ['L punch', 'drawLuffy', {torso:0.15, aF:Math.PI/2, eF:0, stretchF:90, sagF:9, aB:-0.6, eB:1, lF:0.5, kF:-0.3, lB:-0.4, kB:-0.1, face:'angry'}],
+    ['D idle', 'drawDaniela', Object.assign(P.idle(t), {aF:0.15, eF:0.9, aB:-0.05, eB:0.9, pocketF:1, pocketB:1})],
+    ['D run', 'drawDaniela', P.run(t)],
+    ['D kick', 'drawDaniela', {torso:-0.45, head:0.3, aF:-0.9, eF:0.6, aB:-1.4, eB:0.4, lF:1.95, kF:0, lB:-0.15, kB:-0.1, frontLegLast:1, face:'angry'}],
+    ['D crouch', 'drawDaniela', P.crouch()],
+    ['N cry', 'drawNami', Object.assign(P.idle(t), {face:'cry', aF:2.2, eF:1.9, head:0.15})],
+    ['N smile', 'drawNami', Object.assign(P.idle(t), {face:'happy', aF:0.4, eF:0.6})],
+  ] : (G.art.testItems ? G.art.testItems(t) : []);
+  const only = G.params.get('only'), zs = Number(G.params.get('s') || 1.9);
+  items.forEach((it, i) => {
+    if (only !== null && String(i) !== only) return;
+    let x = 70 + (i % 4) * 230, y = i < 4 ? 230 : 470;
+    if (only !== null) { x = 400; y = Number(G.params.get('y') || 520); }
+    ctx.save(); ctx.translate(x, y); ctx.scale(zs, zs);
+    G.art.shadow(ctx, 18);
+    G.art[it[1]](ctx, it[2], t, it[3]);
+    ctx.restore();
+    ctx.fillStyle = '#000'; ctx.font = '14px sans-serif'; ctx.fillText(it[0], x - 30, y + 20);
+  });
+  requestAnimationFrame((ms) => frame(ms / 1000));
+}
+requestAnimationFrame((ms) => frame(ms / 1000));
+</script></body></html>

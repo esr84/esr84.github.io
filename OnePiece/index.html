@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#120a1c">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>La Caída de Arlong Park</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cellipse cx='32' cy='40' rx='30' ry='9' fill='%23f6d25c' stroke='%231a0e1e' stroke-width='3'/%3E%3Cpath d='M15 39 C14 16 50 16 49 39 Z' fill='%23f6d25c' stroke='%231a0e1e' stroke-width='3'/%3E%3Cpath d='M15 38 L15 31 Q32 26 49 31 L49 38 Q32 35 15 38Z' fill='%23cc2a2a' stroke='%231a0e1e' stroke-width='2.5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Lilita+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="wrap"><canvas id="game" aria-label="Juego One Piece: La Caída de Arlong Park"></canvas></div>
+
+<div id="touch" class="hidden">
+  <div id="dpad" class="dpad">
+    <div class="arrow up"></div><div class="arrow down"></div>
+    <div class="arrow left"></div><div class="arrow right"></div>
+    <div id="knob"></div>
+  </div>
+  <div class="btns">
+    <button class="tbtn special" data-action="special">ESP</button>
+    <button class="tbtn attack" data-action="attack">ATQ</button>
+    <button class="tbtn jump" data-action="jump">SALTO</button>
+  </div>
+</div>
+
+<div id="rotate">↻ Gira el móvil para jugar a pantalla grande</div>
+
+<div id="topbtns">
+  <button id="btnPause" title="Pausa (P)">❚❚</button>
+  <button id="btnMute" title="Sonido (M)">♪</button>
+  <button id="btnFull" title="Pantalla completa">⛶</button>
+</div>
+
+<script src="js/core.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/art.js"></script>
+<script src="js/art_enemies.js"></script>
+<script src="js/fx.js"></script>
+<script src="js/level.js"></script>
+<script src="js/player.js"></script>
+<script src="js/enemies.js"></script>
+<script src="js/bosses.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/post.js"></script>
+<script src="js/touch.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
