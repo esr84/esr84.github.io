@@ -1,0 +1,135 @@
+.start-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(20, 22, 27, 0.72);
+  backdrop-filter: blur(2px);
+}
+
+.start-screen[hidden] {
+  display: none;
+}
+
+.start-card {
+  width: min(480px, 100%);
+  padding: 28px;
+  border-radius: 14px;
+  background: #24272e;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.start-title {
+  margin: 0;
+  font-size: 26px;
+}
+
+.start-description,
+.start-hint,
+.start-message,
+.start-progress-label {
+  margin: 0;
+  line-height: 1.45;
+}
+
+.start-hint {
+  color: #b9c3d0;
+}
+
+.start-message {
+  color: #ffb4a8;
+}
+
+.start-message:empty {
+  display: none;
+}
+
+.start-caps {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #8892a0;
+}
+
+.start-progress {
+  height: 8px;
+  border-radius: 4px;
+  background: #3a3f49;
+  overflow: hidden;
+}
+
+.start-progress-bar {
+  width: 0;
+  height: 100%;
+  background: #4f8cff;
+  transition: width 0.15s linear;
+}
+
+.start-button,
+.enter-vr,
+.start-secondary {
+  padding: 12px 20px;
+  font-size: 16px;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.start-button,
+.enter-vr {
+  background: #2f6fed;
+  color: #fff;
+}
+
+.start-secondary {
+  background: transparent;
+  color: #b9c3d0;
+  border: 1px solid #4a505c;
+}
+
+.start-button:disabled,
+.enter-vr:disabled {
+  background: #555b66;
+  cursor: default;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.text-input {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  width: min(560px, calc(100% - 32px));
+  display: flex;
+  gap: 8px;
+  /* Above the IWER emulator overlay, which covers the page during the XR session. */
+  z-index: 2147483647;
+}
+
+.text-input input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+  font-size: 16px;
+  border: 1px solid #4a505c;
+  border-radius: 8px;
+  background: #24272e;
+  color: #f2f2f2;
+}
+
+.text-input button {
+  padding: 12px 18px;
+  font-size: 16px;
+  border: 0;
+  border-radius: 8px;
+  background: #2f6fed;
+  color: #fff;
+  cursor: pointer;
+}

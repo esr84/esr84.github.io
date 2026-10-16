@@ -1,0 +1,647 @@
+{
+  "id": "devolucion-sin-ticket",
+  "title": "Devolución sin ticket",
+  "description": "Eres dependiente en una tienda de electrodomésticos. Javier llega muy enfadado: la tostadora que compró hace una semana no funciona y ha perdido el ticket. Intenta calmarle y encontrar una solución.",
+  "persona": {
+    "name": "Javier"
+  },
+  "initialAnger": 7,
+  "start": "inicio",
+  "hintAfter": 2,
+  "endings": {
+    "calmedAt": 0,
+    "calmedNode": "fin_bien",
+    "escalatedAt": 10,
+    "escalatedNode": "fin_mal"
+  },
+  "globalIntents": [
+    {
+      "id": "saludo",
+      "keywords": ["buenos dias", "buenas tardes", "buenas noches", "hola", "buenas"],
+      "anger": 0,
+      "kind": "positive",
+      "label": "Saludar"
+    },
+    {
+      "id": "disculpa",
+      "keywords": [
+        "lo siento",
+        "disculpe",
+        "perdone",
+        "perdon",
+        "lamento las molestias",
+        "siento las molestias",
+        "le pido disculpas",
+        "disculpas"
+      ],
+      "anger": -1,
+      "kind": "positive",
+      "label": "Pedir disculpas"
+    },
+    {
+      "id": "validar_emocion",
+      "keywords": [
+        "normal que este molesto",
+        "normal que este enfadado",
+        "entiendo que este molesto",
+        "entiendo que este enfadado",
+        "entiendo su enfado",
+        "comprendo su enfado",
+        "tiene motivos",
+        "es logico que",
+        "con razon esta enfadado",
+        "yo tambien estaria"
+      ],
+      "anger": -1,
+      "kind": "positive",
+      "label": "Validar su enfado"
+    },
+    {
+      "id": "tranquilizar_bien",
+      "keywords": [
+        "no se preocupe",
+        "lo solucionamos",
+        "vamos a solucionarlo",
+        "lo vamos a solucionar",
+        "le voy a ayudar",
+        "le ayudo",
+        "buscar una solucion",
+        "encontrar una solucion",
+        "seguro que hay una solucion"
+      ],
+      "anger": -1,
+      "kind": "positive",
+      "label": "Transmitir que se va a resolver"
+    },
+    {
+      "id": "calmese",
+      "keywords": [
+        "calmese",
+        "tranquilicese",
+        "relajese",
+        "no se ponga asi",
+        "no grite",
+        "baje la voz",
+        "no hace falta ponerse asi"
+      ],
+      "anger": 2,
+      "say": [
+        "¡No me diga que me calme!",
+        "¿Que me calme? ¡Lo que me faltaba por oír!",
+        "¡Me calmaré cuando me solucionen esto!"
+      ],
+      "gesture": "no",
+      "kind": "negative",
+      "label": "Decirle que se calme"
+    },
+    {
+      "id": "insulto",
+      "keywords": ["tonto", "idiota", "imbecil", "pesado", "payaso", "largo de aqui", "maleducado"],
+      "anger": 3,
+      "say": ["¿Encima me falta al respeto?", "¡Esto es increíble! ¿Así trata a los clientes?"],
+      "gesture": "no",
+      "kind": "negative",
+      "label": "Faltarle al respeto"
+    },
+    {
+      "id": "culpar",
+      "keywords": [
+        "la habra usado mal",
+        "lo habra roto",
+        "la habra roto",
+        "culpa suya",
+        "usted la ha roto",
+        "mal uso",
+        "no la ha usado bien",
+        "se le habra caido"
+      ],
+      "anger": 2,
+      "say": [
+        "¿Me está llamando mentiroso? ¡La he usado como todo el mundo!",
+        "¡Encima la culpa es mía! Yo solo la he enchufado."
+      ],
+      "gesture": "no",
+      "kind": "negative",
+      "label": "Culpar al cliente"
+    },
+    {
+      "id": "no_es_mi_problema",
+      "keywords": [
+        "no es mi problema",
+        "no es cosa mia",
+        "a mi que me cuenta",
+        "yo no tengo la culpa",
+        "yo no puedo hacer nada"
+      ],
+      "anger": 3,
+      "next": "norma",
+      "kind": "negative",
+      "label": "Desentenderse del problema"
+    },
+    {
+      "id": "consultar_encargado",
+      "keywords": [
+        "llamo al encargado",
+        "llamar al encargado",
+        "consultarlo con mi responsable",
+        "lo consulto",
+        "consultar con mi jefe",
+        "hablo con mi responsable",
+        "pregunto a mi encargado"
+      ],
+      "anger": -1,
+      "say": ["Vale, consúltelo. Pero que sea rápido, por favor."],
+      "kind": "positive",
+      "label": "Consultar con el encargado"
+    }
+  ],
+  "nodes": {
+    "inicio": {
+      "say": [
+        "¡Esto es una vergüenza! Compré esta tostadora hace una semana y ya no funciona.",
+        "¡Oiga! Esta tostadora la compré aquí hace una semana y ya está estropeada. ¡Una vergüenza!"
+      ],
+      "intents": [
+        {
+          "id": "empatia",
+          "keywords": [
+            "entiendo",
+            "comprendo",
+            "tiene razon",
+            "tiene usted razon",
+            "que faena",
+            "vaya por dios",
+            "lo lamento",
+            "que mala suerte"
+          ],
+          "anger": -2,
+          "next": "explica",
+          "kind": "positive",
+          "label": "Mostrar empatía"
+        },
+        {
+          "id": "pregunta_que_paso",
+          "keywords": [
+            "que le ha pasado",
+            "que ha pasado",
+            "que le pasa",
+            "que ocurre",
+            "que problema",
+            "cuenteme",
+            "digame",
+            "puedo ayudarle",
+            "le escucho",
+            "que le sucede"
+          ],
+          "anger": -1,
+          "next": "explica",
+          "kind": "positive",
+          "label": "Preguntar qué ha pasado"
+        },
+        {
+          "id": "pide_ticket",
+          "keywords": ["ticket", "tiquet", "tiquete", "tique", "factura", "recibo", "comprobante"],
+          "anger": 1,
+          "next": "sin_ticket",
+          "kind": "negative",
+          "label": "Pedir el ticket lo primero"
+        }
+      ],
+      "fallback": {
+        "say": [
+          "¿Me está escuchando? ¡Le digo que no funciona!",
+          "¿Hola? ¿Alguien me va a atender o qué?"
+        ],
+        "anger": 1
+      },
+      "hint": ["¿Me va a preguntar qué le pasa o me quedo aquí esperando?"]
+    },
+    "explica": {
+      "say": [
+        "Pues eso, que la enchufo y no calienta nada. Era un regalo para mi madre y ahora quedo fatal. Y encima he perdido el ticket.",
+        "La enchufo y no hace nada, ni calienta. Era para mi madre... Y para colmo no encuentro el ticket."
+      ],
+      "intents": [
+        {
+          "id": "empatia",
+          "keywords": [
+            "entiendo",
+            "comprendo",
+            "tiene razon",
+            "que faena",
+            "vaya",
+            "lo lamento",
+            "que rabia",
+            "normal"
+          ],
+          "anger": -1,
+          "say": [
+            "Ya... Es que me da mucha rabia, la verdad. ¿Y ahora qué hacemos sin ticket?",
+            "Pues sí. Y lo peor es lo del ticket. ¿Hay algo que se pueda hacer?"
+          ],
+          "kind": "positive",
+          "label": "Mostrar empatía"
+        },
+        {
+          "id": "solucion_alternativa",
+          "keywords": [
+            "tarjeta",
+            "extracto",
+            "movimiento del banco",
+            "movimientos del banco",
+            "buscar la compra",
+            "buscarla en el sistema",
+            "en el sistema",
+            "numero de telefono",
+            "cuenta de cliente",
+            "registro de compras",
+            "pago con tarjeta",
+            "pago con el movil",
+            "justificante"
+          ],
+          "anger": -2,
+          "next": "busca_compra",
+          "kind": "positive",
+          "label": "Buscar otra forma de probar la compra"
+        },
+        {
+          "id": "ofrece_revisar",
+          "keywords": [
+            "revisar",
+            "revisarla",
+            "mirarla",
+            "comprobarla",
+            "probarla",
+            "echarle un vistazo",
+            "le echo un vistazo",
+            "la miro",
+            "garantia"
+          ],
+          "anger": -1,
+          "next": "revision",
+          "kind": "positive",
+          "label": "Ofrecer revisar el producto"
+        },
+        {
+          "id": "norma_rigida",
+          "keywords": [
+            "sin ticket no",
+            "es la politica",
+            "son las normas",
+            "no se puede",
+            "no puedo hacer nada",
+            "es imposible",
+            "lo siento pero no"
+          ],
+          "anger": 3,
+          "next": "norma",
+          "kind": "negative",
+          "label": "Escudarse en la norma"
+        }
+      ],
+      "fallback": {
+        "say": ["¿Y entonces? ¿Qué hacemos?", "¿Me va a ayudar o no?"],
+        "anger": 1
+      },
+      "hint": ["Pagué con la tarjeta, por si eso sirve de algo..."]
+    },
+    "sin_ticket": {
+      "say": [
+        "¡Pues no tengo el ticket! ¿Y ahora me va a decir que no puede hacer nada?",
+        "¿El ticket? ¡No lo encuentro! ¿Me va a dejar sin solución por un papel?"
+      ],
+      "intents": [
+        {
+          "id": "empatia",
+          "keywords": ["entiendo", "comprendo", "tiene razon", "no pasa nada", "tranquilo"],
+          "anger": -2,
+          "next": "explica",
+          "kind": "positive",
+          "label": "Mostrar empatía"
+        },
+        {
+          "id": "solucion_alternativa",
+          "keywords": [
+            "tarjeta",
+            "extracto",
+            "movimiento del banco",
+            "buscar la compra",
+            "en el sistema",
+            "numero de telefono",
+            "cuenta de cliente",
+            "pago con tarjeta",
+            "justificante"
+          ],
+          "anger": -2,
+          "next": "busca_compra",
+          "kind": "positive",
+          "label": "Buscar otra forma de probar la compra"
+        },
+        {
+          "id": "norma_rigida",
+          "keywords": [
+            "sin ticket no",
+            "es la politica",
+            "son las normas",
+            "no se puede",
+            "no puedo hacer nada",
+            "es imposible"
+          ],
+          "anger": 3,
+          "next": "norma",
+          "kind": "negative",
+          "label": "Escudarse en la norma"
+        }
+      ],
+      "fallback": {
+        "say": ["¿Entonces qué? ¿Me voy por donde he venido?"],
+        "anger": 1
+      },
+      "hint": ["Pagué con tarjeta, eso tiene que quedar registrado en algún sitio, ¿no?"]
+    },
+    "norma": {
+      "say": [
+        "¿Me está tomando el pelo? ¡Llevo años comprando aquí! Esto no puede ser.",
+        "¿En serio? ¿Por un papel? ¡Quiero una solución, no excusas!"
+      ],
+      "gesture": "no",
+      "intents": [
+        {
+          "id": "solucion_alternativa",
+          "keywords": [
+            "tarjeta",
+            "extracto",
+            "movimiento del banco",
+            "buscar la compra",
+            "en el sistema",
+            "pago con tarjeta",
+            "justificante",
+            "otra forma",
+            "otra manera"
+          ],
+          "anger": -2,
+          "next": "busca_compra",
+          "kind": "positive",
+          "label": "Buscar otra forma de probar la compra"
+        },
+        {
+          "id": "empatia",
+          "keywords": ["entiendo", "comprendo", "tiene razon", "lo lamento"],
+          "anger": -1,
+          "say": [
+            "Pues si lo entiende, haga algo. Seguro que hay alguna manera de demostrar que la compré aquí."
+          ],
+          "kind": "positive",
+          "label": "Mostrar empatía"
+        }
+      ],
+      "fallback": {
+        "say": ["¡Esto es increíble!", "¿Y ya está? ¿Esa es su respuesta?"],
+        "anger": 2
+      },
+      "hint": ["Si al menos pudiera demostrar que la compré aquí... Pagué con tarjeta."]
+    },
+    "revision": {
+      "say": [
+        "Vale, mírela. Pero ya le digo yo que no calienta.",
+        "Mírela, mírela. Ya verá como no funciona."
+      ],
+      "intents": [
+        {
+          "id": "confirma_fallo",
+          "keywords": [
+            "no funciona",
+            "no calienta",
+            "esta estropeada",
+            "esta rota",
+            "defecto",
+            "defectuosa",
+            "efectivamente",
+            "tiene razon",
+            "es verdad"
+          ],
+          "anger": -1,
+          "next": "prueba",
+          "kind": "positive",
+          "label": "Reconocer el fallo"
+        }
+      ],
+      "fallback": {
+        "say": ["¿Qué? ¿Funciona o no funciona?"],
+        "anger": 1
+      },
+      "hint": ["¿Ve como no calienta? Dígamelo usted."]
+    },
+    "prueba": {
+      "say": ["¿Lo ve? Está rota. ¿Y ahora qué hacemos, si no tengo el ticket?"],
+      "intents": [
+        {
+          "id": "solucion_alternativa",
+          "keywords": [
+            "tarjeta",
+            "extracto",
+            "movimiento del banco",
+            "buscar la compra",
+            "en el sistema",
+            "pago con tarjeta",
+            "justificante",
+            "numero de telefono"
+          ],
+          "anger": -2,
+          "next": "busca_compra",
+          "kind": "positive",
+          "label": "Buscar otra forma de probar la compra"
+        },
+        {
+          "id": "norma_rigida",
+          "keywords": ["sin ticket no", "es la politica", "son las normas", "no se puede"],
+          "anger": 3,
+          "next": "norma",
+          "kind": "negative",
+          "label": "Escudarse en la norma"
+        }
+      ],
+      "fallback": {
+        "say": ["¿Entonces? ¿Qué se puede hacer?"],
+        "anger": 1
+      },
+      "hint": ["Pagué con tarjeta, eso tiene que quedar registrado en algún sitio."]
+    },
+    "busca_compra": {
+      "say": [
+        "Vale. Pagué con tarjeta el sábado pasado, mire, aquí tiene el movimiento en el móvil.",
+        "Sí, pagué con tarjeta. Aquí lo tiene, en la aplicación del banco, el sábado pasado."
+      ],
+      "intents": [
+        {
+          "id": "ofrece_cambio",
+          "keywords": [
+            "cambiar",
+            "cambiarla",
+            "cambiarsela",
+            "se la cambio",
+            "por otra",
+            "una nueva",
+            "otra nueva",
+            "sustituir",
+            "reponer"
+          ],
+          "anger": -3,
+          "next": "cierre",
+          "gesture": "yes",
+          "kind": "positive",
+          "label": "Ofrecer un cambio"
+        },
+        {
+          "id": "ofrece_devolucion",
+          "keywords": [
+            "devolverle el dinero",
+            "le devuelvo el dinero",
+            "devolucion",
+            "reembolso",
+            "reembolsar",
+            "abonar"
+          ],
+          "anger": -3,
+          "next": "cierre",
+          "gesture": "yes",
+          "kind": "positive",
+          "label": "Ofrecer el reembolso"
+        },
+        {
+          "id": "ofrece_reparacion",
+          "keywords": ["reparar", "repararla", "servicio tecnico", "arreglarla", "arreglar"],
+          "anger": -1,
+          "next": "reparacion",
+          "kind": "neutral",
+          "label": "Ofrecer reparación"
+        },
+        {
+          "id": "norma_rigida",
+          "keywords": ["sin ticket no", "no vale", "no sirve", "no se puede", "es la politica"],
+          "anger": 2,
+          "next": "norma",
+          "kind": "negative",
+          "label": "Escudarse en la norma"
+        }
+      ],
+      "fallback": {
+        "say": ["¿Entonces? ¿Me la cambia o no?"],
+        "anger": 1
+      },
+      "hint": ["Yo solo quiero una que funcione, o que me devuelvan el dinero."]
+    },
+    "reparacion": {
+      "say": ["¿Al servicio técnico? Eso son semanas, y era un regalo. ¿No me la pueden cambiar?"],
+      "intents": [
+        {
+          "id": "ofrece_cambio",
+          "keywords": [
+            "cambiar",
+            "cambiarla",
+            "cambiarsela",
+            "por otra",
+            "una nueva",
+            "otra nueva"
+          ],
+          "anger": -3,
+          "next": "cierre",
+          "gesture": "yes",
+          "kind": "positive",
+          "label": "Ofrecer un cambio"
+        },
+        {
+          "id": "ofrece_devolucion",
+          "keywords": ["devolverle el dinero", "devolucion", "reembolso", "abonar"],
+          "anger": -2,
+          "next": "cierre",
+          "gesture": "yes",
+          "kind": "positive",
+          "label": "Ofrecer el reembolso"
+        },
+        {
+          "id": "insiste_reparacion",
+          "keywords": [
+            "solo reparacion",
+            "tiene que ser reparacion",
+            "es lo unico",
+            "solo puedo repararla"
+          ],
+          "anger": 2,
+          "next": "norma",
+          "kind": "negative",
+          "label": "Insistir en la reparación"
+        }
+      ],
+      "fallback": {
+        "say": ["¿Me la cambia o no?"],
+        "anger": 1
+      },
+      "hint": ["De verdad, prefiero una nueva o mi dinero."]
+    },
+    "cierre": {
+      "say": [
+        "Bueno... pues eso me vale. ¿Tengo que firmar algo?",
+        "Vale, así sí. ¿Necesita algo más de mí?"
+      ],
+      "intents": [
+        {
+          "id": "cierre_amable",
+          "keywords": [
+            "no hace falta",
+            "firme aqui",
+            "ya esta",
+            "listo",
+            "aqui tiene",
+            "gracias",
+            "de nada",
+            "buen dia",
+            "que tenga",
+            "algo mas",
+            "perfecto",
+            "nada mas"
+          ],
+          "anger": -2,
+          "next": "fin_bien",
+          "kind": "positive",
+          "label": "Cerrar con amabilidad"
+        }
+      ],
+      "fallback": {
+        "say": ["¿Ya está, entonces?"],
+        "anger": 0
+      },
+      "hint": ["Bueno, pues si no hace falta nada más, me voy."]
+    },
+    "fin_bien": {
+      "say": [
+        "Muchas gracias, de verdad. Y perdone si he venido un poco alterado.",
+        "Gracias por la paciencia. Perdone el mal rato, es que venía muy molesto."
+      ],
+      "gesture": "yes",
+      "emotion": "grateful",
+      "outcome": "calmed"
+    },
+    "fin_mal": {
+      "say": [
+        "¡Pues me voy! No pienso volver a comprar aquí. ¡Y lo voy a contar en las reseñas!",
+        "¡Se acabó! Me voy a otra tienda. ¡Qué forma de tratar a la gente!"
+      ],
+      "gesture": "no",
+      "emotion": "angry",
+      "outcome": "escalated"
+    }
+  },
+  "tips": {
+    "calmed": [
+      "Validar la emoción del cliente antes de hablar de normas baja la tensión.",
+      "Preguntar qué ha pasado y escuchar le hace sentirse atendido.",
+      "Ofrecer opciones concretas (buscar la compra, cambio o reembolso) cierra el conflicto."
+    ],
+    "escalated": [
+      "Evita frases como \"cálmese\" o \"son las normas\": suenan a rechazo.",
+      "No culpes al cliente; primero reconoce el problema.",
+      "Busca alternativas: sin ticket, un pago con tarjeta también demuestra la compra."
+    ]
+  }
+}

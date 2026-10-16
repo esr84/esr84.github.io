@@ -1,0 +1,19 @@
+{
+  "name": "TestWebVR · Devolución sin ticket",
+  "short_name": "TestWebVR",
+  "description": "Prototipo de realidad virtual para practicar soft skills hablando con un cliente enfadado.",
+  "lang": "es",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1b1d22",
+  "theme_color": "#2f6fed",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "buenos-dias": {
+    "text": "Buenos días, ¿en qué puedo ayudarle?",
+    "seconds": 1.85
+  },
+  "entiendo": {
+    "text": "Entiendo que esté molesto, tiene usted razón.",
+    "seconds": 2.47
+  },
+  "ticket": {
+    "text": "¿Tiene el ticket de compra?",
+    "seconds": 1.27
+  },
+  "lo-siento": {
+    "text": "Lo siento mucho, vamos a buscar una solución.",
+    "seconds": 2.38
+  },
+  "devolver": {
+    "text": "Podemos cambiársela por otra o devolverle el dinero.",
+    "seconds": 3.02
+  }
+}

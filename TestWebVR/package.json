@@ -1,0 +1,48 @@
+{
+  "name": "testwebvr",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Prototipo WebXR de entrenamiento de soft skills",
+  "scripts": {
+    "dev": "vite",
+    "dev:lan": "vite --mode lan",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . && prettier --check .",
+    "format": "prettier --write .",
+    "test": "vitest run",
+    "check": "npm run typecheck && npm run lint && npm test && npm run build",
+    "build:pages": "vite build --mode pages",
+    "preview:pages": "vite preview --mode pages",
+    "fetch-models": "node scripts/fetch-models.mjs",
+    "gen-fixtures": "node scripts/gen-fixtures.mts",
+    "test:slow": "vitest run --mode slow tests/slow",
+    "test:coverage": "vitest run --coverage --coverage.include=src/scenario/** --coverage.include=src/app/** --coverage.include=src/text/** --coverage.reporter=text"
+  },
+  "dependencies": {
+    "@diffusionstudio/piper-wasm": "1.0.0",
+    "@huggingface/transformers": "4.3.1",
+    "onnxruntime-web": "1.31.0-dev.20260914-8d85527a0",
+    "three": "0.186.1",
+    "troika-three-text": "0.52.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@fontsource/roboto": "5.3.0",
+    "@iwer/devui": "2.6.0",
+    "@types/node": "24.19.2",
+    "@types/three": "0.186.0",
+    "@vitejs/plugin-basic-ssl": "2.3.0",
+    "@vitest/coverage-v8": "5.0.5",
+    "eslint": "10.12.0",
+    "globals": "17.13.0",
+    "iwer": "2.6.0",
+    "prettier": "3.9.10",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.2",
+    "vite": "8.3.4",
+    "vitest": "5.0.5"
+  }
+}
